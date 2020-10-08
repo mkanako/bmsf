@@ -37,8 +37,6 @@ class InstallCommand extends Command
         $this->runMigrate('users');
         $this->runMigrate('attachments');
 
-        // $this->modifyExceptions();
-
         if (!config('jwt.secret')) {
             $this->call('vendor:publish', ['--provider' => 'Tymon\JWTAuth\Providers\LaravelServiceProvider']);
             $this->call('jwt:secret');
@@ -100,17 +98,6 @@ class InstallCommand extends Command
             if ('users' == $type) {
                 $this->call('db:seed', ['--class' => \Cc\Labems\Database\Seeds\UsersTableSeeder::class]);
             }
-        }
-    }
-
-    private function modifyExceptions()
-    {
-        $code = '\Cc\Labems\Exceptions\Handler';
-        $path = app_path() . '/Exceptions/Handler.php';
-        $handler_file = file_get_contents($path);
-        if (false === stripos($handler_file, $code)) {
-            $handler_file = str_replace('parent::render', $code . '::render($request, $exception) ?: parent::render', $handler_file);
-            file_put_contents($path, $handler_file);
         }
     }
 

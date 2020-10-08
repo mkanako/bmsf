@@ -2,9 +2,9 @@
 
 namespace Cc\Labems;
 
+use Cc\Labems\Exceptions\ErrException as Exception;
 use Cc\Labems\Facades\Auth;
 use Cc\Labems\Models\Attachment;
-use Exception;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -23,12 +23,6 @@ class Attacent
     public function url($path)
     {
         return $this->disk->url($path);
-    }
-
-    public function setUid($uid)
-    {
-        $this->uid = $uid;
-        return $this;
     }
 
     public function setPageSize($pageSize)
@@ -90,10 +84,13 @@ class Attacent
 
     public function delete($id)
     {
-        $attachment = Attachment::find($id);
+        $attachment = Attachment::where('uid', $this->uid)->find($id);
         if ($attachment) {
-            $attachment->delete();
-            return  $this->disk->delete($attachment->path);
+            $succ = $this->disk->delete($attachment->path);
+            if (true == $succ) {
+                $attachment->delete();
+            }
+            return $succ;
         }
         throw new Exception('attachment don\'t exist');
     }

@@ -2,6 +2,7 @@
 
 namespace Cc\Labems\Controllers;
 
+use Cc\Labems\Exceptions\ErrException as Exception;
 use Cc\Labems\Facades\Attacent;
 use Cc\Labems\Facades\Auth;
 use Illuminate\Http\Request;
@@ -65,7 +66,7 @@ class BaseController extends Controller
         })->toArray();
         $validator = Validator::make(request()->all(), $rule, $message);
         if ($validator->fails()) {
-            throw new \Exception(implode("\n", $validator->errors()->all()));
+            throw new Exception(implode("\n", $validator->errors()->all()));
         }
         return request()->only(array_keys($rule));
     }

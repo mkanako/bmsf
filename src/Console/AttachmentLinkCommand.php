@@ -12,7 +12,7 @@ class AttachmentLinkCommand extends Command
     public function handle()
     {
         $name = $this->option('name');
-        $root = config($name . '.attachment.disk.root');
+        $root = config('labems.' . $name . '.attachment.disk.root');
         if (empty($root)) {
             return $this->error("config \"{$name}.attacent.disk.root\" not exist");
         }

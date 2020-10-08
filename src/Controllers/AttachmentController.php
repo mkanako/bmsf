@@ -29,7 +29,6 @@ class AttachmentController extends BaseController
 
     public function destroy($id)
     {
-        Attacent::delete($id);
-        return succ();
+        return succ(Attacent::delete($id));
     }
 }

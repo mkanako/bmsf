@@ -2,11 +2,14 @@
 
 namespace Cc\Labems;
 
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 use Route;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LabemsServiceProvider extends ServiceProvider
 {
@@ -16,11 +19,23 @@ class LabemsServiceProvider extends ServiceProvider
         Route::aliasMiddleware('Labems.permission', Middleware\Permission::class);
         Route::aliasMiddleware('bindings', \Illuminate\Routing\Middleware\SubstituteBindings::class);
 
-        $auth = ['guards' => [], 'providers' => []];
         $disks = [];
+        $auth = ['guards' => [], 'providers' => []];
         $config = config('labems', []);
 
         if (!empty($config)) {
+            $this->app->extend(ExceptionHandler::class, function ($service, $app) use ($config) {
+                $service->renderable(function (\Exception $e, $request) use ($config) {
+                    if (defined('LABEMS_ENTRY') || in_array(current(explode('/', trim($request->getPathInfo(), '/'))), array_keys($config))) {
+                        if ($e instanceof MethodNotAllowedHttpException || $e instanceof NotFoundHttpException) {
+                            return err('not Found');
+                        }
+                        return err($e->getMessage());
+                    }
+                });
+                return $service;
+            });
+
             foreach ($config as $key => $value) {
                 $auth['guards'][$key] = [
                     'driver' => 'jwt',

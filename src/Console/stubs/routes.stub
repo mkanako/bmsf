@@ -22,6 +22,6 @@ Route::prefix('{{prefix}}')
     });
 
     Route::fallback(function () {
-        return err('Not Found');
+        return err('not found');
     });
 });
