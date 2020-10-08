@@ -30,7 +30,7 @@ class LabemsServiceProvider extends ServiceProvider
                         if ($e instanceof MethodNotAllowedHttpException || $e instanceof NotFoundHttpException) {
                             return err('not Found');
                         }
-                        return err($e->getMessage());
+                        return err($e->getMessage() ?: preg_replace('/.*\\\/', '', get_class($e)));
                     }
                 });
                 return $service;
