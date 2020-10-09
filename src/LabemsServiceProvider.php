@@ -2,7 +2,6 @@
 
 namespace Cc\Labems;
 
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Response;
@@ -24,7 +23,7 @@ class LabemsServiceProvider extends ServiceProvider
         $config = config('labems', []);
 
         if (!empty($config)) {
-            $this->app->extend(ExceptionHandler::class, function ($service, $app) use ($config) {
+            $this->app->extend(\App\Exceptions\Handler::class, function ($service, $app) use ($config) {
                 $service->renderable(function (\Exception $e, $request) use ($config) {
                     if (defined('LABEMS_ENTRY') || in_array(current(explode('/', trim($request->getPathInfo(), '/'))), array_keys($config))) {
                         if ($e instanceof MethodNotAllowedHttpException || $e instanceof NotFoundHttpException) {
