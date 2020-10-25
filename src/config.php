@@ -4,7 +4,7 @@ return [
     'auth' => [
         'provider' => [
             'driver' => 'eloquent',
-            'model' => Cc\Labems\Models\User::class,
+            'model' => Cc\Bmsf\Models\User::class,
         ],
     ],
     'attachment' => [

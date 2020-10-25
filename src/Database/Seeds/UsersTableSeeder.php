@@ -1,8 +1,8 @@
 <?php
 
-namespace Cc\Labems\Database\Seeds;
+namespace Cc\Bmsf\Database\Seeds;
 
-use Cc\Labems\Models\User;
+use Cc\Bmsf\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 

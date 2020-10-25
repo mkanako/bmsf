@@ -4,18 +4,18 @@ Route::prefix('{{prefix}}')
     ->namespace('App\{{Prefix}}\Controllers')
     ->middleware('bindings')
     ->group(function () {
-    Route::post('login', '\Cc\Labems\Controllers\BaseController@login');
-    Route::get('logout', '\Cc\Labems\Controllers\BaseController@logout');
+    Route::post('login', '\Cc\Bmsf\Controllers\BaseController@login');
+    Route::get('logout', '\Cc\Bmsf\Controllers\BaseController@logout');
 
-    Route::middleware('Labems.auth')
+    Route::middleware('Bmsf.auth')
         ->group(function () {
-        Route::post('changePassword', '\Cc\Labems\Controllers\BaseController@changePassword');
-        Route::get('sysInfo', '\Cc\Labems\Controllers\BaseController@sysInfo');
-        Route::apiResource('attachment', '\Cc\Labems\Controllers\AttachmentController')->except(['show', 'update']);
+        Route::post('changePassword', '\Cc\Bmsf\Controllers\BaseController@changePassword');
+        Route::get('sysInfo', '\Cc\Bmsf\Controllers\BaseController@sysInfo');
+        Route::apiResource('attachment', '\Cc\Bmsf\Controllers\AttachmentController')->except(['show', 'update']);
 
-        Route::middleware('Labems.permission')
+        Route::middleware('Bmsf.permission')
             ->group(function () {
-            Route::apiResource('user', '\Cc\Labems\Controllers\UserController');
+            Route::apiResource('user', '\Cc\Bmsf\Controllers\UserController');
             Route::apiResource('home', HomeController::class);
 
         });

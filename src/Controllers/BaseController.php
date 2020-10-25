@@ -1,10 +1,10 @@
 <?php
 
-namespace Cc\Labems\Controllers;
+namespace Cc\Bmsf\Controllers;
 
-use Cc\Labems\Exceptions\ErrException as Exception;
-use Cc\Labems\Facades\Attacent;
-use Cc\Labems\Facades\Auth;
+use Cc\Bmsf\Exceptions\ErrException as Exception;
+use Cc\Bmsf\Facades\Attacent;
+use Cc\Bmsf\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;

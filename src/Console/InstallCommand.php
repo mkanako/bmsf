@@ -1,6 +1,6 @@
 <?php
 
-namespace Cc\Labems\Console;
+namespace Cc\Bmsf\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 
 class InstallCommand extends Command
 {
-    protected $signature = 'labems:install {--name=admin} {--force}';
-    protected $description = 'labems install command';
+    protected $signature = 'bmsf:install {--name=admin} {--force}';
+    protected $description = 'bmsf install command';
 
     public function handle()
     {
@@ -18,7 +18,7 @@ class InstallCommand extends Command
         $dir = relative_path(app_path(ucfirst($name)));
         $this->context = get_defined_vars();
 
-        define('LABEMS_ENTRY', $name);
+        define('BMSF_ENTRY', $name);
 
         if (is_dir($dir) && !$force) {
             $this->error("the \"{$dir}\" directory already exists");
@@ -54,11 +54,11 @@ class InstallCommand extends Command
         $src = preg_replace('/]\s*?;$/', "],\n", $src);
         $src = str_replace('return', "'{$name}' =>", $src);
         $src = preg_replace('/^/m', '    ', $src);
-        $config = config('labems', []);
+        $config = config('bmsf', []);
         if (empty($config)) {
             $configFile = "<?php\n\nreturn [\n" . $src . "];\n";
         } else {
-            $configFile = file_get_contents(config_path('labems.php'));
+            $configFile = file_get_contents(config_path('bmsf.php'));
             if (isset($config[$name])) {
                 if (!$force) {
                     return;
@@ -79,8 +79,8 @@ class InstallCommand extends Command
                 $configFile = preg_replace('/,?\s*?]\s*?;/', ",\n{$src}];", $configFile);
             }
         }
-        if (false !== file_put_contents(config_path('labems.php'), $configFile)) {
-            $this->info('configuration file writed: config/labems.php');
+        if (false !== file_put_contents(config_path('bmsf.php'), $configFile)) {
+            $this->info('configuration file writed: config/bmsf.php');
         }
     }
 
@@ -96,7 +96,7 @@ class InstallCommand extends Command
         if (true === $this->compileStub("create_{$type}_table", $migrationFile)) {
             $this->call('migrate', ['--path' => $migrationFile]);
             if ('users' == $type) {
-                $this->call('db:seed', ['--class' => \Cc\Labems\Database\Seeds\UsersTableSeeder::class]);
+                $this->call('db:seed', ['--class' => \Cc\Bmsf\Database\Seeds\UsersTableSeeder::class]);
             }
         }
     }

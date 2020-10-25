@@ -1,13 +1,13 @@
 <?php
 
-namespace Cc\Labems\Models;
+namespace Cc\Bmsf\Models;
 
-use Cc\Labems\Facades\Attacent;
+use Cc\Bmsf\Facades\Attacent;
 use Illuminate\Database\Eloquent\Model;
 
 class Attachment extends Model
 {
-    protected $table = LABEMS_ENTRY . '_attachments';
+    protected $table = BMSF_ENTRY . '_attachments';
     protected $visible = [
         'id',
         'path',

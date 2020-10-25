@@ -1,8 +1,8 @@
 <?php
 
-namespace Cc\Labems\Middleware;
+namespace Cc\Bmsf\Middleware;
 
-use Cc\Labems\Facades\Auth;
+use Cc\Bmsf\Facades\Auth;
 use Illuminate\Http\Request;
 
 class Permission

@@ -1,8 +1,8 @@
 <?php
 
-namespace Cc\Labems\Controllers;
+namespace Cc\Bmsf\Controllers;
 
-use Cc\Labems\Facades\Attacent;
+use Cc\Bmsf\Facades\Attacent;
 use Illuminate\Http\Request;
 
 class AttachmentController extends BaseController

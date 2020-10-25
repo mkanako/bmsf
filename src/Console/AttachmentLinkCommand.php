@@ -1,18 +1,18 @@
 <?php
 
-namespace Cc\Labems\Console;
+namespace Cc\Bmsf\Console;
 
 use Illuminate\Console\Command;
 
 class AttachmentLinkCommand extends Command
 {
-    protected $signature = 'labems:link {--name=admin}';
+    protected $signature = 'bmsf:link {--name=admin}';
     protected $description = 'create symbolic link to attachment storage';
 
     public function handle()
     {
         $name = $this->option('name');
-        $root = config('labems.' . $name . '.attachment.disk.root');
+        $root = config('bmsf.' . $name . '.attachment.disk.root');
         if (empty($root)) {
             return $this->error("config \"{$name}.attacent.disk.root\" not exist");
         }

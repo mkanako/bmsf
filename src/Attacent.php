@@ -1,10 +1,10 @@
 <?php
 
-namespace Cc\Labems;
+namespace Cc\Bmsf;
 
-use Cc\Labems\Exceptions\ErrException as Exception;
-use Cc\Labems\Facades\Auth;
-use Cc\Labems\Models\Attachment;
+use Cc\Bmsf\Exceptions\ErrException as Exception;
+use Cc\Bmsf\Facades\Auth;
+use Cc\Bmsf\Models\Attachment;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -16,7 +16,7 @@ class Attacent
 
     public function __construct()
     {
-        $this->disk = Storage::disk(LABEMS_ENTRY);
+        $this->disk = Storage::disk(BMSF_ENTRY);
         $this->uid = Auth::id();
     }
 
@@ -33,7 +33,7 @@ class Attacent
 
     public function upload(UploadedFile $file)
     {
-        $allowedExt = config('labems.' . LABEMS_ENTRY . '.attachment.allowed_ext', []);
+        $allowedExt = config('bmsf.' . BMSF_ENTRY . '.attachment.allowed_ext', []);
         $type = strstr($file->getMimeType(), '/', true);
         if ($type && array_key_exists($type, $allowedExt) && (1 === preg_match('/^(' . $allowedExt[$type] . ')$/i', $file->extension()))) {
             $path = $this->disk->putFile($type . '/' . date('Y/m/d'), $file);

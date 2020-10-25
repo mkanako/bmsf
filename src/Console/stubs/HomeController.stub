@@ -2,7 +2,7 @@
 
 namespace App\{{Prefix}}\Controllers;
 
-use Cc\Labems\Controllers\BaseController as Controller;
+use Cc\Bmsf\Controllers\BaseController as Controller;
 
 class HomeController extends Controller
 {

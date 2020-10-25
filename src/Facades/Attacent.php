@@ -1,6 +1,6 @@
 <?php
 
-namespace Cc\Labems\Facades;
+namespace Cc\Bmsf\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -8,6 +8,6 @@ class Attacent extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Cc\Labems\Attacent::class;
+        return \Cc\Bmsf\Attacent::class;
     }
 }

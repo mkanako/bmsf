@@ -1,6 +1,6 @@
 <?php
 
-namespace Cc\Labems\Controllers;
+namespace Cc\Bmsf\Controllers;
 
 use Illuminate\Http\Request;
 

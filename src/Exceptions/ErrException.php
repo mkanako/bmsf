@@ -1,6 +1,6 @@
 <?php
 
-namespace Cc\Labems\Exceptions;
+namespace Cc\Bmsf\Exceptions;
 
 use Exception;
 

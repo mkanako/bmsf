@@ -1,6 +1,6 @@
 <?php
 
-namespace Cc\Labems;
+namespace Cc\Bmsf;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
@@ -10,22 +10,22 @@ use Route;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class LabemsServiceProvider extends ServiceProvider
+class BmsfServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Route::aliasMiddleware('Labems.auth', Middleware\Authenticate::class);
-        Route::aliasMiddleware('Labems.permission', Middleware\Permission::class);
+        Route::aliasMiddleware('Bmsf.auth', Middleware\Authenticate::class);
+        Route::aliasMiddleware('Bmsf.permission', Middleware\Permission::class);
         Route::aliasMiddleware('bindings', \Illuminate\Routing\Middleware\SubstituteBindings::class);
 
         $disks = [];
         $auth = ['guards' => [], 'providers' => []];
-        $config = config('labems', []);
+        $config = config('bmsf', []);
 
         if (!empty($config)) {
             $this->app->extend(\App\Exceptions\Handler::class, function ($service, $app) use ($config) {
                 $service->renderable(function (\Exception $e, $request) use ($config) {
-                    if (defined('LABEMS_ENTRY') || in_array(current(explode('/', trim($request->getPathInfo(), '/'))), array_keys($config))) {
+                    if (defined('BMSF_ENTRY') || in_array(current(explode('/', trim($request->getPathInfo(), '/'))), array_keys($config))) {
                         if ($e instanceof MethodNotAllowedHttpException || $e instanceof NotFoundHttpException) {
                             return err('not Found');
                         }
@@ -81,7 +81,7 @@ class LabemsServiceProvider extends ServiceProvider
         Route::matched(function ($matched) use ($config) {
             $prefix = $matched->route->action['prefix'];
             if (!empty($prefix) && array_key_exists($prefix, $config)) {
-                define('LABEMS_ENTRY', $prefix);
+                define('BMSF_ENTRY', $prefix);
                 Facades\Auth::macro('newToken', function ($user = null) {
                     if (config('jwt.blacklist_enabled')) {
                         $this->invalidate();
